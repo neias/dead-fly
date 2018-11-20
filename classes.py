@@ -21,6 +21,11 @@ class BaseClass(pygame.sprite.Sprite):
         BaseClass.allsprites.remove(self)
         del self
 
+    def destroy(self, ClassName):
+        ClassName.List.remove(self)
+        BaseClass.allsprites.remove(self)
+        del self
+
 class Bug(BaseClass):
 
 
