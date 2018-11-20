@@ -32,6 +32,7 @@ def process(bug, FPS, total_frames):
 
 
     spawn(FPS, total_frames)
+    collisions()
     #PROCESSES
 
 
@@ -47,6 +48,14 @@ def spawn(FPS, total_frames):
 
         classes.Fly(x, 130, 40, 35, "images/fly.png")
 
+def collisions():
+    
+    for fly in classes.Fly.List:
+
+        fly_proj = pygame.sprite.spritecollide(fly, classes.BugProjectile.List, True)
+        if len(fly_proj) > 0:
+            for hit in fly_proj: 
+                fly.health -= fly.half_health 
 
 
 

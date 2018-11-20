@@ -18,6 +18,11 @@ class BaseClass(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
+    def destroy(self, ClassName):
+        ClassName.List.remove(self)
+        BaseClass.allsprites.remove(self)
+        del self
+
 class Bug(BaseClass):
 
 
@@ -68,8 +73,21 @@ class Fly(BaseClass):
     def __init__(self, x, y, width, height, image_string):
         BaseClass.__init__(self, x, y, width, height, image_string)
         Fly.List.add(self)
+        self.health = 100
+        self.half_health = self.health / 2.0
         self.velx = randint(1, 4)
         self.amplitude, self.period = randint(20, 140), randint(4, 5) / 100.0
+
+    @staticmethod
+    def update_all(SCREENWIDTH):
+
+        for fly in Fly.List:
+
+            fly.fly(SCREENWIDTH)
+
+            if fly.health <= 0:
+                fly.destroy(Fly)
+
 
     def fly(self, SCREENWIDTH):
         if self.rect.x + self.width > SCREENWIDTH or self.rect.x < 0:
@@ -81,11 +99,6 @@ class Fly(BaseClass):
         # a * sin(bx + c) + y 
 
         self.rect.y = self.amplitude * math.sin(self.period * self.rect.x) + 140 
-
-    @staticmethod
-    def movement(SCREENWIDTH):
-        for fly in Fly.List:
-            fly.fly(SCREENWIDTH)
 
 class BugProjectile(pygame.sprite.Sprite):
 

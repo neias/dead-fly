@@ -18,7 +18,7 @@ while True:
     process(bug, FPS, total_frames)
     #LOGIC
     bug.motion(SCREENWIDTH, SCREENHEIGHT)
-    Fly.movement(SCREENWIDTH)
+    Fly.update_all(SCREENWIDTH)
     BugProjectile.movement()
     total_frames += 1
     #LOGIC
