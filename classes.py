@@ -87,12 +87,34 @@ class Fly(BaseClass):
         for fly in Fly.List:
             fly.fly(SCREENWIDTH)
 
-class BugProjectile(BaseClass):
+class BugProjectile(pygame.sprite.Sprite):
 
     List = pygame.sprite.Group()
+    normal_list = []
 
     def __init__(self, x, y, width, height, image_string):
-        BaseClass.__init__(self, x, y, width, height, image_string)
+        
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(image_string)
+
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+        self.width = width
+        self.height = height
+
+        try:
+            last_element = BugProjectile.normal_list[-1]
+            difference = abs(self.rect.x - last_element.rect.x)
+
+            if difference < self.width:
+                return
+
+        except Exception:
+            pass
+
+        BugProjectile.normal_list.append(self)
         BugProjectile.List.add(self)
         self.velx = None
 
